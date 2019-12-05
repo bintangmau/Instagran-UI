@@ -1,0 +1,31 @@
+.navbar1 {
+    background-color: black;
+    padding: 1.5%;
+    display: flex;
+}
+
+.judulNavbar { 
+    text-decoration: none;
+    color: white;
+    margin-top: 20px;
+}
+
+.navbarItem1 {
+    text-decoration: none;
+    color: white;
+}
+
+.navbar1 h4 {
+    margin-top: 32px;
+}
+
+.tombolKeluar {
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 16px;
+    background: black;
+    cursor: pointer;
+    font-weight: bold;
+    color: red;
+}

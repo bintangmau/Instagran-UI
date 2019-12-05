@@ -1,0 +1,33 @@
+.profile1 {
+    display: flex;
+    margin-top: 5%;
+    margin-left: 8%;
+}
+
+.profile1 img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.profile2 {
+    margin-left: 2%;
+}
+
+.profile3 h4 {
+    font-size: 25px;
+}
+
+.profile2 p {
+    font-size: 16px;
+}
+
+.profile3 {
+    display: flex;
+}
+
+.profile3 button {
+    height: 25px;
+    margin-top: 14%;
+    margin-left: 15px;
+}

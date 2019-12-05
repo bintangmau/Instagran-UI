@@ -11,6 +11,7 @@ class Auth extends Component {
         showSign: false,
         usernameRegister: '',
         passwordRegister: '',
+        nameRegister: '',
         usernameLogin: '',
         passwordLogin: '',
         tampungGambar: ''
@@ -28,7 +29,8 @@ class Auth extends Component {
         var data = {
             username: this.state.usernameRegister,
             password: this.state.passwordRegister,
-            role: 'user'
+            role: 'user',
+            name: this.state.nameRegister
         }
 
         bodyFormData.append('data', JSON.stringify(data))
@@ -39,9 +41,8 @@ class Auth extends Component {
         } else if(this.state.passwordRegister === '') {
             swal('Ups!', 'Input Password', 'warning')
         } else {
-            console.log(bodyFormData)
             this.props.registerUser(bodyFormData, options)
-            this.setState({ usernameRegister: '', passwordRegister: '', tampungGambar: ''})
+            this.setState({ usernameRegister: '', passwordRegister: '', tampungGambar: '', nameRegister: ''})
         }
     }
 
@@ -75,16 +76,16 @@ class Auth extends Component {
                     ?
                     <>
                     <div className='gantiSign'>
-                        <input type="button" value="Don't have an account?&nbsp;Please, Sign Up"className="btn btn-outline-warning" style={{color:"black", border :"none"}} onClick={() => this.setState({ showSign: true })}/>
+                        <input type="button" value="Don't have an account?&nbsp;Please, Sign Up"className="btn btn-outline-warning" style={{color:"black", border :"none"}} onClick={() => this.setState({ showSign: true, passwordLogin: '' })}/>
                     </div>
                     <div className='loginBox'>
                         <img src='http://daman.co.id/daman.co.id/wp-content/uploads/2017/05/18160966_1300500379997093_1978007820502564864_n-1024x1024.jpg' class='authLogo'/>
                         <h2 style={{color: 'white', marginTop: '30px'}}>Sign In</h2>
                         <form>
                             <p>Username</p>
-                                <input type="text" placeholder='Username' onChange={(e) => this.setState({ usernameLogin: e.target.value })}/>
+                                <input type="text" placeholder='Username' onChange={(e) => this.setState({ usernameLogin: e.target.value })} value={this.state.usernameLogin}/>
                             <p>Password</p>
-                            <input type="password" placeholder='Password' onChange={(e) => this.setState({ passwordLogin: e.target.value })}/>
+                            <input type="password" placeholder='Password' onChange={(e) => this.setState({ passwordLogin: e.target.value })} value={this.state.passwordLogin}/>
                             <input type="button" value='Sign in' className='tombolMasuk' onClick={this.onBtnLogin}/>
                             <a href="">Lupa Password</a>
                         </form>
@@ -94,7 +95,7 @@ class Auth extends Component {
                     <>
                     {/* tampilkanRegister */}
                     <div className='gantiSign'>
-                        <input type="button" value="Sign In"className="btn btn-outline-warning" style={{color:"black", border :"none"}} onClick={() => this.setState({ showSign: false })}/>
+                        <input type="button" value="Sign In"className="btn btn-outline-warning" style={{color:"black", border :"none"}} onClick={() => this.setState({ showSign: false, passwordRegister: '' })}/>
                     </div>
                     <div className='loginBox'>
                         <img src='http://daman.co.id/daman.co.id/wp-content/uploads/2017/05/18160966_1300500379997093_1978007820502564864_n-1024x1024.jpg' class='authLogo'/>
@@ -102,6 +103,8 @@ class Auth extends Component {
                         <form>
                             <p>Username</p>
                                 <input type="text" placeholder='Username' onChange={(e) => this.setState({usernameRegister: e.target.value})} value={this.state.usernameRegister}/>
+                            <p>Your Name</p>
+                                <input type="text" placeholder='Your Name' onChange={(e) => this.setState({ nameRegister: e.target.value })} value={this.state.nameRegister} />
                             <p>Password</p>
                             <input type="password" placeholder='Password' onChange={(e) => this.setState({passwordRegister: e.target.value})} value={this.state.passwordRegister}/>
                             <p>Profile Photo</p>

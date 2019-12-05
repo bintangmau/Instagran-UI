@@ -22,17 +22,19 @@ class Navbar extends Component{
                     <h1>
                         <Link to='/' className='judulNavbar'>Instagran</Link>
                     </h1>
-                    <h4 style={{marginLeft: "800px"}}>
-                        <Link to='/explore' className='navbarItem1'>Explore</Link>
-                    </h4>
                     {
                         this.props.username === ''
                         ?
                         null
                         :
-                        <h4 style={{marginLeft: '30px'}}>
-                            <Link to='/profile' className='navbarItem1'>Profile</Link>
+                        <>
+                        <h4 style={{marginLeft: "800px"}}>
+                            <Link to='/explore' className='navbarItem1'>Explore</Link>
                         </h4>
+                        <h4 style={{marginLeft: '30px'}}>
+                            <Link to={`/profile/${this.props.id}`} className='navbarItem1'>Profile</Link>
+                        </h4>
+                        </>
                     }
                     {/* {
                         this.props.username === ''
@@ -62,7 +64,8 @@ class Navbar extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        username: state.user.username
+        username: state.user.username,
+        id: state.user.id
     }
 }
 

@@ -27,7 +27,8 @@ export const loginUser = (loginUser) => {
                        username: res.data[0].username,
                        password: res.data[0].password,
                        role: res.data[0].role,
-                       photo: res.data[0].photo
+                       photo: res.data[0].photo,
+                       name: res.data[0].name
                    }
                })
                localStorage.setItem('data', res.data[0].username)
@@ -60,11 +61,12 @@ export const keepLogin = (username) => {
             dispatch({
                 type: 'KEEP_LOGIN',
                 payload: {
-                       iduser: res.data[0].id,
+                       id: res.data[0].id,
                        username: res.data[0].username,
                        password: res.data[0].password,
                        role: res.data[0].role,
-                       photo: res.data[0].photo
+                       photo: res.data[0].photo,
+                       name: res.data[0].name
                    }
             })
         })

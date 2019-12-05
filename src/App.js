@@ -23,7 +23,7 @@ render() {
       <Switch>
         <Route path='/' component={MainPage} exact />
         <Route path='/explore' component={ExplorePage} exact />
-        <Route path='/profile' component={ProfilePage} exact />
+        <Route path='/profile/:id' component={ProfilePage} exact />
         <Route path='/auth' component={Auth} exact />
       </Switch>
     </div>

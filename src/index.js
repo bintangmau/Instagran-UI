@@ -8,6 +8,9 @@ import ReduxThunk from 'redux-thunk'
 import App from './App';
 import Reducers from './redux/reducers';
 import * as serviceWorker from './serviceWorker';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
 
 const globalStore = createStore(Reducers, {}, applyMiddleware(ReduxThunk))
 

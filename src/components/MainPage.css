@@ -30,10 +30,6 @@
     padding: 20px;
 }
 
-.caption1 {
-    display: flex;
-}
-
 .caption1 p {
     font-size: 20px;
 }
@@ -41,3 +37,100 @@
 .caption1 span{
     font-weight: bold;
 }
+
+.caption2 {
+    display: flex;
+}
+
+.caption2 button {
+    padding: 10px 30px;
+    color: white;
+    background-color: #555;
+    font-size: 15px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.caption2 button:hover {
+    background: #00bcd4;
+}
+
+.comment1 {
+    margin-top: 20px;
+    position: relative;
+    width: 500px;
+    padding: 20px;
+}
+
+.comment1 h2 {
+    color: #999;
+    margin-bottom: 45px;
+}
+
+.comment1 button {
+    margin-top: 20px;
+    border: none;
+    box-shadow: none;
+    padding: 10px 25px;
+    background: #555;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.comment1 button:hover {
+    background: #00bcd4;
+}
+
+.comment2 {
+    position: relative;
+    height: 40px;
+    width: 100%;
+}
+
+.comment2 input[type="text"] {
+    position: absolute;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    font-size: 16px;
+    width: 100%;    
+}
+
+.comment2 label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #555;
+    pointer-events: none;
+    display: block;
+    transition: 0.5s;
+}
+
+.comment2 input[type="text"]:focus + label {
+    transform: translateY(-35px);
+}
+
+.comment2 span {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: block;
+    background: #555;
+    width: 100%;
+    height: 2px;
+}
+
+.comment2 span:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s ease-in-out;
+}
+

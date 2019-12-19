@@ -1,0 +1,66 @@
+.details1 {
+    margin-top: 8%;
+    margin-left: 18%;
+    display: flex;
+}
+
+.details1 img {
+    width: 450px;
+}
+
+.details2 {
+    height: 600px;
+}
+
+.details2 h4 {
+    margin: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.details2 p {
+    margin-left: 20px;
+}
+
+.details2 input[type= "text"] {
+    margin-left: 20px;
+}
+
+.detailsOption {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.detailsOption input[type="button"] {
+    height: 45px;
+    width: 200px;
+    color: white;
+    background-color: black;
+    font-size: 15px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.editCaption input[type="button"] {
+    height: 35px;
+    width: 120px;
+    color: white;
+    background-color: black;
+    font-size: 15px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.editCaption input[type="text"] {
+    width: 300px;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    margin: 5px 0;
+    outline: none;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-left: 20px;
+    transition: .3s;
+}

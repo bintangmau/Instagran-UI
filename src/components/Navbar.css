@@ -1,13 +1,13 @@
 .navbar1 {
     background-color: black;
-    padding: 1.5%;
+    padding: 2%;
     display: flex;
 }
 
 .judulNavbar { 
     text-decoration: none;
     color: white;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .navbarItem1 {
@@ -15,17 +15,11 @@
     color: white;
 }
 
-.navbar1 h4 {
-    margin-top: 32px;
+.navbar1 input[type="button"] {
+    margin-top: 10px;
+    margin-left: 25px;
 }
 
-.tombolKeluar {
-    border: none;
-    outline: none;
-    color: white;
-    font-size: 16px;
-    background: black;
-    cursor: pointer;
-    font-weight: bold;
-    color: red;
+.navbar1 h4 {
+    margin-top: 20px;
 }

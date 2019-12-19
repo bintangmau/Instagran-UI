@@ -10,7 +10,7 @@ export const registerUser = (registerUser, options) => {
         })
         .catch((err) => {
             console.log(registerUser)
-            swal('Ups', 'Username Used!', 'warning')
+            swal('Ups', 'Something is Wrong!', 'error')
         })
     }
 }

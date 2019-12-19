@@ -32,10 +32,14 @@ class Navbar extends Component{
                             <Link to='/explore' className='navbarItem1'>Explore</Link>
                         </h4>
                         <h4 style={{marginLeft: '30px'}}>
+                            <Link className='navbarItem1'>Notification</Link>
+                        </h4>
+                        <h4 style={{marginLeft: '30px'}}>
                             <Link to={`/profile/${this.props.id}`} className='navbarItem1'>Profile</Link>
                         </h4>
                         </>
                     }
+                       
                     {/* {
                         this.props.username === ''
                         ?
@@ -50,11 +54,7 @@ class Navbar extends Component{
                         ?
                         null
                         :
-                        <h4 style={{marginLeft: "30px"}}>
-                            <Link className='navbarItem1'>
-                                <input type="button" value="Log out" className='tombolKeluar' onClick={this.btnLogOut}/>
-                            </Link>
-                        </h4>
+                        <input type="button" value="Log out" className='btn btn-danger' onClick={this.btnLogOut}/> 
                     }
                 </div>
             </div>

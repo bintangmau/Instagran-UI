@@ -1,12 +1,13 @@
 .loginBox {
     position: absolute;
-    top: 58%;
+    top: 65%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 420px;
+    width: 380px;
     box-sizing: border-box;
     background: black;
     padding: 40px 80px;
+    margin-bottom: 8%;
 }
 
 .authLogo {

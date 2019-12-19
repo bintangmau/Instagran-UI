@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import axios from 'axios'
 import { registerUser, loginUser } from '../redux/actions/userAction'
 import swal from 'sweetalert'
 
 import './Auth.css'
+import { urlApi } from '../helper/database'
 
 class Auth extends Component {
     state = {
@@ -14,7 +16,9 @@ class Auth extends Component {
         nameRegister: '',
         usernameLogin: '',
         passwordLogin: '',
-        tampungGambar: ''
+        tampungGambar: '',
+        tampungDataCek: '',
+        loadingRegister: false
     }
 
     onBtnRegister = ()  => {
@@ -41,8 +45,22 @@ class Auth extends Component {
         } else if(this.state.passwordRegister === '') {
             swal('Ups!', 'Input Password', 'warning')
         } else {
-            this.props.registerUser(bodyFormData, options)
-            this.setState({ usernameRegister: '', passwordRegister: '', tampungGambar: '', nameRegister: ''})
+            this.setState({ loadingRegister: true })
+            axios.get(urlApi + 'user/getcekregister/' + this.state.usernameRegister)
+            .then((res) => {
+                if(res.data.length > 0) {
+                    this.setState({ loadingRegister: false })
+                    swal('Ups', 'Username Used!', 'warning')
+                } else {
+                    this.props.registerUser(bodyFormData, options)
+                    this.setState({ usernameRegister: '', passwordRegister: '', tampungGambar: '', nameRegister: '', loadingRegister: false})
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+                this.setState({ loadingRegister: false})
+                swal('ups', 'get gagal', 'error')
+            })
         }
     }
 
@@ -86,6 +104,7 @@ class Auth extends Component {
                                 <input type="text" placeholder='Username' onChange={(e) => this.setState({ usernameLogin: e.target.value })} value={this.state.usernameLogin}/>
                             <p>Password</p>
                             <input type="password" placeholder='Password' onChange={(e) => this.setState({ passwordLogin: e.target.value })} value={this.state.passwordLogin}/>
+                            
                             <input type="button" value='Sign in' className='tombolMasuk' onClick={this.onBtnLogin}/>
                             <a href="">Lupa Password</a>
                         </form>
@@ -109,7 +128,15 @@ class Auth extends Component {
                             <input type="password" placeholder='Password' onChange={(e) => this.setState({passwordRegister: e.target.value})} value={this.state.passwordRegister}/>
                             <p>Profile Photo</p>
                             <input type="file" style={{background: 'white'}} onChange={this.imagePost}/>
-                            <input type="button" value='Sign Up' className='tombolMasuk' onClick={this.onBtnRegister}/>
+                            {
+                                this.state.loadingRegister === true
+                                ?
+                                <div className="spinner-border" role="status">
+                                    <span className="sr-only">Loading...</span>
+                                </div>
+                                :
+                                <input type="button" value='Sign Up' className='tombolMasuk' onClick={this.onBtnRegister}/>
+                            }
                             <a href="">Lupa Password</a>
                         </form>
                     </div>

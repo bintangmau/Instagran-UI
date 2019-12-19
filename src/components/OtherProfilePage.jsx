@@ -9,6 +9,8 @@ import swal from 'sweetalert';
 import './ProfilePage.css'
 
 class OtherProfilePage extends Component {
+    idFollowedUser = this.props.match.params.id
+
     state = {
         tampungDataUser: [],
         tampungUserPhoto: [],
@@ -29,18 +31,18 @@ class OtherProfilePage extends Component {
     }
 
     getDataUser = () => {
-        Axios.post(urlApi + 'user/getdatauser', { idUser: this.props.match.params.id })
+        Axios.post(urlApi + 'user/getdatauser', { idUser: this.idFollowedUser })
         .then((res) => {
             this.setState({ tampungDataUser: res.data })
         })
         .catch((err) => {
-            alert(JSON.stringify(err))
-            swal('Sip!', 'gagal', 'error')
+            console.log(err)
+            swal('Sip!', 'gagal disini jancok', 'error')
         })
     }
 
     getPhotoUser = () => {
-        Axios.get(urlApi + 'photo/getuserphoto/' + this.props.match.params.id)
+        Axios.get(urlApi + 'photo/getuserphoto/' + this.idFollowedUser)
         .then((res) => {
             this.setState({ tampungUserPhoto: res.data })
         })
@@ -50,10 +52,10 @@ class OtherProfilePage extends Component {
         })
     }
 
-    checkFollowed = () => {
+    checkFollowed = () => { 
         Axios.post(urlApi + 'user/checkfollowed', {
             idUserFollows: this.props.id,
-            idFollowedUser: this.props.match.params.id
+            idFollowedUser: this.idFollowedUser
         })
         .then((res) => {
             this.setState({ tampungCheckFollowed: res.data })
@@ -67,7 +69,7 @@ class OtherProfilePage extends Component {
     onBtnFollow = () => {
         Axios.post(urlApi + 'user/followinguser', {
             id_user_follows: this.props.id,
-            id_followed_user: this.props.match.params.id,
+            id_followed_user: this.idFollowedUser,
             date_follows: this.state.waktu
         })
         .then(() => {
@@ -83,7 +85,7 @@ class OtherProfilePage extends Component {
         if(window.confirm('Are you Sure to Unfollow this User ?')) {
             Axios.post(urlApi + 'user/unfollow', {
                 idUserFollows: this.props.id,
-                idFollowedUser: this.props.match.params.id
+                idFollowedUser: this.idFollowedUser
             })
             .then(() => {
                 this.checkFollowed()

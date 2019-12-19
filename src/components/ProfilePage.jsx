@@ -107,8 +107,7 @@ class ProfilePage extends Component {
         const data = {
             id_user : this.props.id,
             caption : this.state.caption,
-            date_photo: this.state.datePhoto,
-            likes_photo: 0
+            date_photo: this.state.datePhoto
         }
 
         bodyFormData.append('data', JSON.stringify(data))

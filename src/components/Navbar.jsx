@@ -32,14 +32,13 @@ class Navbar extends Component{
                             <Link to='/explore' className='navbarItem1'>Explore</Link>
                         </h4>
                         <h4 style={{marginLeft: '30px'}}>
-                            <Link className='navbarItem1'>Notification</Link>
+                            <Link to='/notification' className='navbarItem1'>Notification</Link>
                         </h4>
                         <h4 style={{marginLeft: '30px'}}>
                             <Link to={`/profile/${this.props.id}`} className='navbarItem1'>Profile</Link>
                         </h4>
                         </>
                     }
-                       
                     {/* {
                         this.props.username === ''
                         ?

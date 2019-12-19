@@ -12,6 +12,7 @@ import Auth from './components/Auth'
 import DetailsPhoto from './components/DetailsPhoto'
 import OtherProfilePage from './components/OtherProfilePage'
 import OtherDetailsPhoto from './components/OtherDetailsPhoto'
+import Notification from './components/Notification' 
 
 class App extends React.Component {
   componentDidMount() {
@@ -31,6 +32,7 @@ render() {
         <Route path='/detailsphoto/:id' component={DetailsPhoto} exact/>
         <Route path='/otherprofilepage/:id' component={OtherProfilePage} exact />
         <Route path='/otherdetailsphoto/:id' component={OtherDetailsPhoto} exact />
+        <Route path='/notification' component={Notification} exact />
       </Switch>
     </div>
     );

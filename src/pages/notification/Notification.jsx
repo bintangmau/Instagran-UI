@@ -12,7 +12,7 @@ export default function Notification() {
         <div>
             <h1>{username}</h1>
             <button onClick={getDataUser}>
-                Click me    
+                Click me cok    asmput
             </button>
         </div>
     )

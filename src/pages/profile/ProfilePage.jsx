@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios'
-import { urlApi } from '../helper/database'
+import { urlApi } from '../../helper/database'
 import { Redirect, Link } from 'react-router-dom'
 import moment from 'moment'
 import swal from 'sweetalert';
+
+import { editProfile } from '../../redux/actions/userAction'
 import './ProfilePage.css'
 
 class ProfilePage extends Component {
@@ -18,7 +20,10 @@ class ProfilePage extends Component {
         loadingPost: false,
         countPosts: 0,
         countFollowers: 0,
-        countFollowings: 0
+        countFollowings: 0,
+        showEditProfile: false,
+        newUsername: '',
+        newName: ''
     }
 
     componentDidMount() {
@@ -134,30 +139,79 @@ class ProfilePage extends Component {
         }
     }
 
+    editUsername = () => {
+        if(this.state.newUsername === '' && this.state.newName === '') {
+            swal('Ups!', 'Input Username!', 'warning')
+        } else {
+           this.props.editProfile(this.state.newUsername, this.state.newName, this.props.id)
+        }
+    }
+
     renderProfile = () => {
         return this.state.dataUser.map((val) => {
             return (
                 <div className='profile1'>
                     <div className="row">
-                        <div className="col-md-3">
+                        <div className="col-md-4">
                             <img src={urlApi + val.photo} alt="" />
                         </div>
-                        <div className="col-md-9">
+                        <div className="col-md-8">
                             <div className='profile2'>
-                                <div className="profile3">
+                                {
+                                    this.state.showEditProfile
+                                    ?
+                                    <>
+                                    <input 
+                                        type="text" 
+                                        placeholder={val.username} 
+                                        className='form-control' 
+                                        onChange={(e) => this.setState({ newUsername: e.target.value })}
+                                        value={this.state.newUsername}
+                                    />
+                                    </>
+                                    :
                                     <h4>{val.username}</h4>
-                                    <p style={{marginLeft: '30px'}}><span>{this.state.countPosts}</span> <br/>posts</p>
+                                }
+                                <div className="profile3">
+                                    <p><span>{this.state.countPosts}</span> <br/>post</p>
                                     <p style={{marginLeft: '30px'}}><span>{this.state.countFollowers}</span> <br/>followers</p>
                                     <p style={{marginLeft: '30px'}}><span>{this.state.countFollowings}</span> <br/>following</p>
                                 </div>
-                                <p>{val.name}</p>
+                                {
+                                    this.state.showEditProfile
+                                    ?
+                                    <>
+                                      <input 
+                                        type="text" 
+                                        className='form-control' 
+                                        onChange={(e) => this.setState({ newName: e.target.value })}
+                                        value={this.state.newName}
+                                        style={{marginBottom: '20px'}}
+                                    />
+                                    </>
+                                    :
+                                    <p>{val.name}</p>
+                                }
                                 {
                                     this.state.showPost
                                     ?
                                     null
                                     :
-                                    <div>
-                                        <button className='btn btn-success' onClick={() => this.setState({ showPost: true })}>Post</button>
+                                    <div className='row'>
+                                        {
+                                            this.state.showEditProfile
+                                            ?
+                                            <>
+                                            <button className='btn btn-success' onClick={this.editUsername}>Edit</button>
+                                            <button className='btn btn-danger' onClick={() => this.setState({ showEditProfile: false })}>Cancel</button>
+                                            </>
+                                            :
+                                            <>
+                                            <button className='btn btn-success' onClick={() => this.setState({ showPost: true })}>Upload photo</button>
+                                            <button className='btn btn-light' onClick={() => this.setState({ showEditProfile: true })}>Edit Profile</button>
+                                            </>
+                                        }
+                                        
                                     </div>
                                 }
                                 {
@@ -172,7 +226,7 @@ class ProfilePage extends Component {
                                             </label>
                                             </div>
                                             <br />
-                                            <input type="text" placeholder='Caption' onChange={(e) => this.setState({ caption: e.target.value})} value={this.state.caption}/>
+                                            <input type="text" placeholder='Input Caption' onChange={(e) => this.setState({ caption: e.target.value})} value={this.state.caption}/>
                                         </div>
                                         <div className="footerPost">
                                             {
@@ -236,4 +290,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(ProfilePage);
+export default connect(mapStateToProps, { editProfile })(ProfilePage);

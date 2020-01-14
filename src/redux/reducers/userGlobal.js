@@ -17,6 +17,8 @@ export default (state = INITIAL_STATE, action) => {
         case 'KEEP_LOGIN' :
             return {...INITIAL_STATE, id: action.payload.id, username: action.payload.username, password: action.payload.password, role: action.payload.role, 
                                     photo: action.payload.photo,  name: action.payload.name }
+        case 'EDIT_PROFILE' :
+            return {...INITIAL_STATE, username: action.payload.username, name: action.payload.name }
             default :
         return state
     }

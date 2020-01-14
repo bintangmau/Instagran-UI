@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { urlApi } from '../helper/database'
+import { urlApi } from '../../helper/database'
 import swal from 'sweetalert'
 
-import './DetailsPhoto.css'
+import '../detailsphoto/DetailsPhoto.css'
 
 class OtherDetailsPhoto extends Component {
     state = {

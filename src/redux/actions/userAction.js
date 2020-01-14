@@ -75,3 +75,25 @@ export const keepLogin = (username) => {
         })
     }
 }
+
+export const editProfile = (username, name, idUser) => {
+    return (dispatch) => {
+        axios.post(urlApi + 'user/editusername/' + idUser, { 
+            username,name
+        })
+        .then(() => {
+            dispatch({
+                type: 'EDIT_PROFILE',
+                payload: {
+                    username,
+                    name
+                }
+            })
+            swal('Sip', 'Bisa', 'success')
+        })
+        .catch((err) => {
+            console.log(err)
+            swal('Ups', 'Edit Failed', 'error')
+        })
+    }
+}

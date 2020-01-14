@@ -4,12 +4,15 @@ import axios from 'axios'
 import moment from 'moment'
 import swal from 'sweetalert'
 import { urlApi } from '../helper/database';
-import './MainPage.css'
+import '../pages/home/MainPage.css'
 
-export default function ListPhoto({ dataListPhoto,  sendCommentBtn, idUser }) {
+export default function ListPhoto({ dataListPhoto, idUser }) {
     const [ liked, setLiked ] = useState(false)
     const [ date, setDate ] = useState(moment().startOf('hour').fromNow())
     const [ countLike, setCountLike ] = useState(0)
+    const [ comment, setComment ] = useState('')
+    const [ listComment, setListComment ] = useState([])
+
 
     const checkLikePhoto = () => {
         axios.post(urlApi + 'photo/checklikephoto', { idUser, idPhoto: dataListPhoto.idphotos })
@@ -30,6 +33,19 @@ export default function ListPhoto({ dataListPhoto,  sendCommentBtn, idUser }) {
     const likePhoto = () => {
         axios.post(urlApi + 'photo/likephoto', { id_user: idUser, id_photo: dataListPhoto.idphotos, date_likes: date})
         .then(() => {
+            setLiked(true)
+            getCountLike()
+        })
+        .catch((err) => {
+            console.log(err)
+            swal('Ups!', 'Like gagal', 'error')
+        })      
+    }
+
+    const unLikePhoto = () => {
+        axios.post(urlApi + 'photo/unlikephoto', { idUser, idPhoto: dataListPhoto.idphotos })
+        .then(() => {
+            setLiked(false)
             getCountLike()
         })
         .catch((err) => {
@@ -49,10 +65,57 @@ export default function ListPhoto({ dataListPhoto,  sendCommentBtn, idUser }) {
         })
     }
     
+    const getListComment = () => {
+        axios.get(urlApi + 'photo/getlistcomment/' + dataListPhoto.idphotos)
+        .then((res) => {
+            setListComment(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+            swal('Ups', 'get list failed', 'error')
+        })
+    }
+
+    const onBtnSendComment = (event) => {
+        if (event.key === 'Enter') {
+            if(!comment) {
+                swal('Ups!', 'Input Comment', 'warning')
+            } else {
+                axios.post(urlApi + 'photo/commentphoto', {
+                    comment,
+                    id_user_comment: idUser,
+                    id_photo_comment: dataListPhoto.idphotos,
+                    date_comment: date
+                })
+                .then(() => {
+                    setComment('')
+                    getListComment()
+                })
+                .catch((err) => {
+                    console.log(err)
+                    swal('Ups!', 'Comment Failed', 'error')
+                })
+            }
+        }
+    }
+    
+    const renderListComment = () => {
+        return listComment.map((val) => {
+            return (
+                <div>
+                    <p style={{fontSize: '18px'}}><span>{val.username}</span> {val.comment}</p>
+                </div>
+            )
+        })
+    }
+
     useEffect(() => {
         checkLikePhoto()
         getCountLike()
-    })
+        getListComment()
+        renderListComment()
+    }, [])
+
 
     return (
             <div className='listFoto1 shadow'>
@@ -73,21 +136,19 @@ export default function ListPhoto({ dataListPhoto,  sendCommentBtn, idUser }) {
                             {
                                 liked
                                 ?
-                                <button>Unlike</button>
+                                <button onClick={unLikePhoto}>Unlike</button>
                                 :
                                 <button onClick={likePhoto}>Like</button>
                             }
                         </div>
+                        {/* <ListComment idPhoto={dataListPhoto.idphotos} /> */}
                         <div className="comment1">
-                            <h2>Comment here</h2>
+                            {renderListComment()}
                             <div className="comment2">
-                                <form>
-                                    <input type="text" onChange={(e) => this.setState({ comment: e.target.dataListPhoto })}/>
+                                    <input type="text" value={comment} onChange={(e) => setComment(e.target.value)} onKeyUp={onBtnSendComment}/>
                                     <label>Comment</label>
                                     <span></span>
-                                </form>
                             </div>
-                            <button onClick={() => sendCommentBtn(dataListPhoto.idphotos)}>Send</button>
                         </div>
                     </div>
                 </div>

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import swal from 'sweetalert'
 import { connect } from 'react-redux'
-import { urlApi } from '../helper/database'
+import { urlApi } from '../../helper/database'
 import { Redirect } from 'react-router-dom'
+import SimpleImageSlider from "react-simple-image-slider";
 
 import './DetailsPhoto.css'
 
@@ -12,7 +13,8 @@ class DetailsPhoto extends Component {
         tampungDetailsPhoto: [],
         editCaptionShow: false,
         newCaption: '',
-        pindahHabisHapus: false
+        pindahHabisHapus: false,
+        tampungSlidePhoto: []
     }
 
     componentDidMount() {
@@ -33,6 +35,19 @@ class DetailsPhoto extends Component {
         })
     }
 
+    // getSliderPhoto = () => {
+    //     axios.get(urlApi + 'photo/getsliderphoto/' + this.props.id)
+    //     .then((res) => {
+    //         this.setState({ tampungSlidePhoto: res.data })
+    //         console.log(res.data)
+    //         swal('ye!', 'get bisa', 'success')
+    //     })
+    //     .catch((err) => {
+    //         console.log(err)
+    //         swal('Ups!', 'gagal', 'error')
+    //     })
+    // }
+
     editCaption = () => {
         if(this.state.newCaption === '') {
             swal('Ups', 'Input New Caption!', 'warning')
@@ -41,7 +56,6 @@ class DetailsPhoto extends Component {
             .then(() => {
                 this.setState({ editCaptionShow: false })
                 this.getDetailsPhoto()
-                swal('Ye!', 'Edit Success', 'success')
             })
             .catch((err) => {
                 console.log(err)
@@ -68,6 +82,13 @@ class DetailsPhoto extends Component {
         return this.state.tampungDetailsPhoto.map((val) => {
             return (
                 <div>
+                    <div>
+                    {/* <SimpleImageSlider
+                        width={896}
+                        height={504}
+                        images={urlApi + val.path_photo}
+                    /> */}
+                    </div>
                     <div className='detailsOption'>
                         <input type="button" value="Edit Caption" onClick={() => this.setState({ editCaptionShow: true })}/>
                         <input type="button" value="Delete" onClick={this.deletePhoto}/>    
@@ -86,8 +107,8 @@ class DetailsPhoto extends Component {
                                 <>
                                 <div className='editCaption'>
                                     <input type="text" placeholder={val.caption} onChange={(e) => this.setState({ newCaption: e.target.value })}/>
-                                    <input type="button" value="Edit" onClick={this.editCaption}/>
-                                    <input type="button" value="Cancel" onClick={() => this.setState({ editCaptionShow: false })}/>
+                                    <input type="button" className='btn btn-success' value="Edit" onClick={this.editCaption}/>
+                                    <input type="button" className='btn btn-danger' value="Cancel" onClick={() => this.setState({ editCaptionShow: false })}/>
                                 </div>
                                 </>
                             }

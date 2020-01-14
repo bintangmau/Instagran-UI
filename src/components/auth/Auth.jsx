@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
-import { registerUser, loginUser } from '../redux/actions/userAction'
+import { registerUser, loginUser } from '../../redux/actions/userAction'
 import swal from 'sweetalert'
 
 import './Auth.css'
-import { urlApi } from '../helper/database'
+import { urlApi } from '../../helper/database'
 
 class Auth extends Component {
     state = {

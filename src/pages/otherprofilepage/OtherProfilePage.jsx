@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import { Link} from 'react-router-dom'
-import { urlApi } from '../helper/database';
+import { urlApi } from '../../helper/database';
 import { connect } from 'react-redux'
 import moment from 'moment'
 import swal from 'sweetalert';
 
-import './ProfilePage.css'
+import '../profile/ProfilePage.css'
 
 class OtherProfilePage extends Component {
     idFollowedUser = this.props.match.params.id
@@ -15,7 +15,10 @@ class OtherProfilePage extends Component {
         tampungDataUser: [],
         tampungUserPhoto: [],
         tampungCheckFollowed: [],
-        waktu: moment().format("MMM Do YY")
+        waktu: moment().format("MMM Do YY"),
+        countPosts: 0,
+        countFollowers: 0,
+        countFollowings: 0
     }
 
     componentDidMount() {
@@ -24,6 +27,9 @@ class OtherProfilePage extends Component {
         this.renderDataUser()
         this.getPhotoUser()
         this.renderUserPhoto()
+        this.getCountPosts()
+        this.getCountFollowers()
+        this.getCountFollowings()
     }
     
     componentDidUpdate() {
@@ -74,6 +80,7 @@ class OtherProfilePage extends Component {
         })
         .then(() => {
           this.checkFollowed()
+          this.getCountFollowers()
         })
         .catch((err) => {
             console.log(err)
@@ -89,6 +96,7 @@ class OtherProfilePage extends Component {
             })
             .then(() => {
                 this.checkFollowed()
+                this.getCountFollowers()
             })
             .catch((err) => {
                 console.log(err)
@@ -97,14 +105,47 @@ class OtherProfilePage extends Component {
         }
     }
 
+    getCountPosts = () => {
+        Axios.post(urlApi + 'user/countposts', { idUser: this.props.match.params.id })
+        .then((res) => {
+            this.setState({ countPosts: res.data[0].jumlahPost })
+        })
+        .catch((err) => {
+            console.log(err)
+            swal('ups', 'get gagal count posts', 'error')
+        })
+    }
+
+    getCountFollowers = () => {
+        Axios.post(urlApi + 'user/countfollowers', { idUser: this.props.match.params.id })
+        .then((res) => {
+            this.setState({ countFollowers: res.data[0].jumlahFollowers })
+        })
+        .catch((err) => {
+            console.log(err)
+            swal('ups', 'get gagal count followers', 'error')
+        })
+    }
+
+    getCountFollowings = () => {
+        Axios.post(urlApi + 'user/countfollowings', { idUser: this.props.match.params.id})
+        .then((res) => {
+            this.setState({ countFollowings: res.data[0].jumlahFollowing })
+        })
+        .catch((err) => {
+            console.log(err)
+            swal('ups', 'get gagal count following', 'error')
+        })
+    }
+
     renderDataUser = () => {
         return this.state.tampungDataUser.map((val) => {
             return (
             <div className='profile1 row'>
-                <div className="col-md-3">
+                <div className="col-md-4">
                     <img src={urlApi + val.photo} alt="" />
                 </div>
-                <div className="col-md-9">
+                <div className="col-md-8">
                     <div className='profile2'>
                         <div className="profile4">
                             <div className="row">
@@ -123,9 +164,9 @@ class OtherProfilePage extends Component {
                             </div>
                         </div>
                         <div className="profile3" style={{marginTop: "20px"}}>
-                            <p><span>100</span> Posts</p>
-                            <p style={{marginLeft: '30px'}}><span>45 M</span> Followers</p>
-                            <p style={{marginLeft: '30px'}}><span>300</span> Following</p>
+                            <p><span>{this.state.countPosts}</span> Posts</p>
+                            <p style={{marginLeft: '30px'}}><span>{this.state.countFollowers}</span> Followers</p>
+                            <p style={{marginLeft: '30px'}}><span>{this.state.countFollowings}</span> Following</p>
                         </div>
                         <p>{val.name}</p>
                     </div>

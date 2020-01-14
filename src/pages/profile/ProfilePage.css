@@ -3,8 +3,8 @@
 }
 
 .profile1 img {
-    width: 200px;
-    height: 200px;
+    width: 230px;
+    height: 230px;
     border-radius: 50%;
 }
 
@@ -14,10 +14,10 @@
 
 .profile3 {
     display: flex;
+    margin-top: 20px;
 }
 
-.profile3 h4 {
-    margin-top: 10px;
+.profile2 h4 {
     font-weight: bold;
 }
 

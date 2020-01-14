@@ -1,24 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux' 
 import axios from 'axios'
-import { Redirect } from 'react-router-dom'
-import { urlApi } from '../helper/database';
+import { Redirect, Link } from 'react-router-dom'
+import { urlApi } from '../../helper/database';
 
 import moment from 'moment'
 import swal from 'sweetalert';
+import ListPhoto from '../../components/ListPhoto'
 import './MainPage.css'
-import ListPhoto from './ListPhoto'
 
 class MainPage extends Component {
     state = {
         tampungDataMainPage: [],
         date_likes: moment().startOf('hour').fromNow(),
         likedOrNot: false,
-        comment: ''
+        comment: '',
+        listComment : [],
+        jumlahLikes: 0
     }
 
     componentDidMount() {
         this.getDataMainPage()
+        this.renderDataMainPage()
     }
 
     getDataMainPage = () => {
@@ -43,39 +46,30 @@ class MainPage extends Component {
     //         swal('Ups!', 'getgagal', 'error')
     //     })
     // }
-
-
     
+    // getCountLike = () => {
+    //     axios.get(urlApi + 'photo/countlike/' + dataListPhoto.idphotos)
+    //     .then((res) => {
+    //         this.setState({ jumlahLikes: res.data[0].jumlahLikes })
+    //     })
+    //     .catch((err) => {
+    //         console.log(err)
+    //         swal('Ups!', 'get gagal', 'error')
+    //     })
+    // }
 
-    onBtnSendComment = (idPhoto) => {
-        if(this.state.comment === '') {
-            swal('Ups!', 'Input Comment', 'warning')
-        } else {
-            axios.post(urlApi + 'photo/commentphoto', {
-                comment: this.state.comment,
-                id_user_comment: this.props.id,
-                id_photo_comment: idPhoto,
-                date_comment: this.state.date_likes
-            })
-            .then(() => {
-                this.setState({ comment: ''})
-                swal('Ye!', 'commentbisa', 'success')
-            })
-            .catch((err) => {
-                console.log(err)
-                swal('Ups!', 'Comment Failed', 'error')
-            })
-        }
-    }
-    
     renderDataMainPage = () => {
         return this.state.tampungDataMainPage.map((val) => {
+            // this.getListComment(val.idphotos)
             return (
-                <ListPhoto dataListPhoto={val} sendCommentBtn={this.onBtnSendComment} idUser={this.props.id}/>
+             <div>
+                 <ListPhoto dataListPhoto={val} idUser={this.props.id}/>
+             </div>
             )
         })
     }
 
+    
     render() {
         if(this.props.username === '') {
             return <Redirect to='/auth'/>

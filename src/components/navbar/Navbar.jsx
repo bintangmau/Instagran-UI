@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './Navbar.css'
-import { logOut } from '../redux/actions/userAction'
+import { logOut } from '../../redux/actions/userAction'
 import swal from 'sweetalert';
 
 

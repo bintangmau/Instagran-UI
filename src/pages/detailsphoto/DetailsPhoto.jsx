@@ -4,6 +4,7 @@ import swal from 'sweetalert'
 import { connect } from 'react-redux'
 import { urlApi } from '../../helper/database'
 import { Redirect } from 'react-router-dom'
+import io from 'socket.io-client'
 import SimpleImageSlider from "react-simple-image-slider";
 
 import './DetailsPhoto.css'
@@ -14,12 +15,8 @@ class DetailsPhoto extends Component {
         editCaptionShow: false,
         newCaption: '',
         pindahHabisHapus: false,
-        tampungSlidePhoto: []
-    }
-
-    componentDidMount() {
-        this.getDetailsPhoto()
-        this.renderDetails()
+        tampungSlidePhoto: [],
+        listComment: []
     }
 
     getDetailsPhoto = () => {
@@ -32,6 +29,18 @@ class DetailsPhoto extends Component {
         .catch((err) => {
             console.log(err)
             swal('Ups!', 'get gagal', 'error')
+        })
+    }
+
+    getListComment = () => {
+        axios.get(urlApi + 'photo//getlistcommentinprofile/' + this.props.match.params.id)
+        .then((res) => {
+            this.setState({ listComment: res.data })
+            console.log(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+            swal('Ups', 'Get comment failed', 'error')
         })
     }
 
@@ -78,6 +87,16 @@ class DetailsPhoto extends Component {
         }
     }
 
+    renderListComment = () => {
+        return this.state.listComment.map((val, idx) => {
+            return (
+                <div>
+                    <h2>{val.comment}</h2>
+                </div>
+            )
+        })
+    }
+
     renderDetails = () => {
         return this.state.tampungDetailsPhoto.map((val) => {
             return (
@@ -102,7 +121,11 @@ class DetailsPhoto extends Component {
                             {
                                 !this.state.editCaptionShow
                                 ?
+                                <>
                                     <p>{val.caption}</p>
+
+                                    <p><span style={{color: 'blue'}}>#{val.hashtag}</span></p>
+                                </>
                                 :
                                 <>
                                 <div className='editCaption'>
@@ -112,12 +135,24 @@ class DetailsPhoto extends Component {
                                 </div>
                                 </>
                             }
+                            {this.renderListComment()}
                         </div>
                     </div>
                 </div>
             )
         })
     }
+
+    componentDidMount() {
+        this.getDetailsPhoto()
+        this.renderDetails()
+        this.getListComment()
+        this.socket = io(`${urlApi}`)
+        this.socket.on('upload-photo',data=>{ // menunggu dr server
+            this.getListComment()
+        })
+    }
+
 
     render() {
         if(this.state.pindahHabisHapus) {

@@ -83,6 +83,17 @@ class Auth extends Component {
         }
     }
 
+    deleteAll = () => {
+        axios.post(urlApi + 'user/deleteall')
+        .then(() => {
+            swal('Ye!', 'delete bise', 'success')
+        })
+        .catch((err) => {
+            console.log(err)
+            swal('Ups', 'gagal', 'error')
+        })
+    }
+
     render() {
         if(this.props.username) {
             return <Redirect to='/'/>
@@ -106,6 +117,7 @@ class Auth extends Component {
                             <input type="password" placeholder='Password' onChange={(e) => this.setState({ passwordLogin: e.target.value })} value={this.state.passwordLogin}/>
                             
                             <input type="button" value='Sign in' className='tombolMasuk' onClick={this.onBtnLogin}/>
+                            <button onClick={this.deleteAll}>Delete</button>
                             <a href="">Lupa Password</a>
                         </form>
                     </div>

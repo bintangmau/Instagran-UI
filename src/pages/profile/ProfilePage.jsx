@@ -14,6 +14,7 @@ class ProfilePage extends Component {
         dataUser: [],
         showPost: false,
         caption: '',
+        hashtag: '',
         datePhoto: moment().startOf('hour').fromNow(),
         photo: '',
         tampungUserPhoto: [],
@@ -112,7 +113,8 @@ class ProfilePage extends Component {
         const data = {
             id_user : this.props.id,
             caption : this.state.caption,
-            date_photo: this.state.datePhoto
+            date_photo: this.state.datePhoto,
+            hashtag: this.state.hashtag
         }
 
         bodyFormData.append('data', JSON.stringify(data))
@@ -227,6 +229,11 @@ class ProfilePage extends Component {
                                             </div>
                                             <br />
                                             <input type="text" placeholder='Input Caption' onChange={(e) => this.setState({ caption: e.target.value})} value={this.state.caption}/>
+                                            <p className='shadow'>#{this.state.hashtag}</p>
+                                            <div style={{display: 'flex'}}>
+                                                <input type="text" placeholder='Hashtag (optional)' onChange={(e) => this.setState({ hashtag: e.target.value})}/>
+                                                <button className='btn btn-success'>Tambahkan</button>
+                                            </div>
                                         </div>
                                         <div className="footerPost">
                                             {
@@ -259,7 +266,7 @@ class ProfilePage extends Component {
             return (
                 <div className='col-md-3'>
                     <Link to={`/detailsphoto/${val.idphotos}`}>
-                        <img src={urlApi + val.path_photo} alt=""/>
+                        <img src={urlApi + val.path_photo} alt="" style={{ objectFit: 'cover'}}/>
                     </Link>
                 </div>
             )

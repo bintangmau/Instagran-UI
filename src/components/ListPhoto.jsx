@@ -3,6 +3,8 @@ import { Redirect, Link } from 'react-router-dom'
 import axios from 'axios'
 import moment from 'moment'
 import swal from 'sweetalert'
+import io from 'socket.io-client'
+
 import { urlApi } from '../helper/database';
 import '../pages/home/MainPage.css'
 
@@ -79,7 +81,7 @@ export default function ListPhoto({ dataListPhoto, idUser }) {
     const onBtnSendComment = (event) => {
         if (event.key === 'Enter') {
             if(!comment) {
-                swal('Ups!', 'Input Comment', 'warning')
+                return null
             } else {
                 axios.post(urlApi + 'photo/commentphoto', {
                     comment,
@@ -120,7 +122,7 @@ export default function ListPhoto({ dataListPhoto, idUser }) {
     return (
             <div className='listFoto1 shadow'>
                 <div className="listHeader1">
-                    <img style={{width: "80px", borderRadius: "50%"}} src={urlApi + dataListPhoto.photo} alt=""/>
+                    <img style={{width: "80px", height: '80px',objectFit: 'cover', borderRadius: "50%"}} src={urlApi + dataListPhoto.photo} alt=""/>
                     <p>
                         <Link to={`/otherprofilepage/${dataListPhoto.id}`} style={{textDecoration: 'none', color: 'black'}}>{dataListPhoto.username}</Link>
                     </p>
@@ -147,7 +149,6 @@ export default function ListPhoto({ dataListPhoto, idUser }) {
                             <div className="comment2">
                                     <input type="text" value={comment} onChange={(e) => setComment(e.target.value)} onKeyUp={onBtnSendComment}/>
                                     <label>Comment</label>
-                                    <span></span>
                             </div>
                         </div>
                     </div>

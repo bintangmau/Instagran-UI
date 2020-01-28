@@ -14,6 +14,7 @@ import OtherProfilePage from './pages/otherprofilepage/OtherProfilePage'
 import OtherDetailsPhoto from './pages/otherdetailsphoto/OtherDetailsPhoto'
 import Notification from './pages/notification/Notification' 
 import EditProfile from './pages/editprofile/EditProfile'
+import DirectMessage from './pages/directmessage/DirectMessage'
 
 class App extends React.Component {
   componentDidMount() {
@@ -35,6 +36,7 @@ render() {
         <Route path='/otherdetailsphoto/:id' component={OtherDetailsPhoto} exact />
         <Route path='/notification' component={Notification} exact />
         <Route path='/editprofile' component={EditProfile} exact />
+        <Route path='/directmessage' component={DirectMessage} exact />
       </Switch>
     </div>
     );

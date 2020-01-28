@@ -79,8 +79,19 @@ class OtherProfilePage extends Component {
             date_follows: this.state.waktu
         })
         .then(() => {
-          this.checkFollowed()
-          this.getCountFollowers()
+            Axios.post(urlApi + 'notification/notiffollows', {
+                id_fail: this.props.id,
+                id_maful: this.idFollowedUser,
+                date_notif: new Date().getFullYear() + '-' + (new Date().getMonth() + 1)  + '-' + new Date().getDate(),
+                message: 'Mulai mengikuti anda'
+            })
+            .then(() => {
+                this.checkFollowed()
+                this.getCountFollowers()
+            })
+            .catch((err) => {
+                console.log(err)
+            })
         })
         .catch((err) => {
             console.log(err)

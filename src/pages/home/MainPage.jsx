@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import { Redirect, Link } from 'react-router-dom'
 import { urlApi } from '../../helper/database';
+import io from 'socket.io-client'
 
 import moment from 'moment'
 import swal from 'sweetalert';
@@ -22,6 +23,10 @@ class MainPage extends Component {
     componentDidMount() {
         this.getDataMainPage()
         this.renderDataMainPage()
+        this.socket = io(`${urlApi}`)
+        this.socket.on('upload-photo',data=>{ // menunggu dr server
+            this.getDataMainPage()
+        })
     }
 
     getDataMainPage = () => {
@@ -81,7 +86,9 @@ class MainPage extends Component {
                     ?
                     this.renderDataMainPage()
                     :
-                    null
+                    <>
+                        <h1>Cari akun</h1>
+                    </>
                 }
             </div>
         )

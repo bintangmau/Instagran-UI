@@ -33,7 +33,7 @@ class ExplorePage extends Component {
             return (
                 <div className='col-md-3 listPhoto1'>
                     <Link to={`/otherprofilepage/${val.id}`}>
-                        <img src={urlApi + val.path_photo} style={{width: '420px', height: '420px', marginBottom: '30px'}}/>
+                        <img src={urlApi + val.path_photo} style={{width: '350px', height: '350px', margin: '30px', objectFit: 'cover'}}/>
                     </Link>
                 </div>
             )

@@ -32,9 +32,9 @@ export const loginUser = (loginUser) => {
                    }
                })
                localStorage.setItem('data', res.data[0].username)
-               swal('Login Success', `Welcome, ${res.data[0].username}`, 'success')
+            //    swal('Login Success', `Welcome, ${res.data[0].username}`, 'success')
            } else {
-               swal('Ups', 'Username/Password id Wrong', 'error')
+                alert('Username/Password id Wrong')
            }
         })
         .catch((err) => {

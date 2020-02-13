@@ -1,1 +1,1 @@
-export const urlApi = 'http://localhost:2001/'
+export const urlApi = 'https://instagran-api.herokuapp.com/'

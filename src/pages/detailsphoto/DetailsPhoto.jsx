@@ -110,7 +110,7 @@ class DetailsPhoto extends Component {
                     </div>
                     <div className='detailsOption'>
                         <input type="button" value="Edit Caption" onClick={() => this.setState({ editCaptionShow: true })}/>
-                        <input type="button" value="Delete" onClick={this.deletePhoto}/>    
+                        <input type="button" value="Delete this photo" onClick={this.deletePhoto}/>    
                     </div>
                     <div className="details1">
                         <div className="detailsPhoto">

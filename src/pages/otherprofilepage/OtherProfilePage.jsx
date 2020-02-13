@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-import { Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { urlApi } from '../../helper/database';
 import { connect } from 'react-redux'
 import moment from 'moment'
@@ -176,8 +176,12 @@ class OtherProfilePage extends Component {
                         </div>
                         <div className="profile3" style={{marginTop: "20px"}}>
                             <p><span>{this.state.countPosts}</span> Posts</p>
-                            <p style={{marginLeft: '30px'}}><span>{this.state.countFollowers}</span> Followers</p>
-                            <p style={{marginLeft: '30px'}}><span>{this.state.countFollowings}</span> Following</p>
+                            <Link to={`/followers/${this.props.match.params.id}`}>
+                                <p style={{marginLeft: '30px', color: 'black'}}><span>{this.state.countFollowers}</span> Followers</p>
+                            </Link>
+                            <Link to={`/followings/${this.props.match.params.id}`}>
+                                <p style={{marginLeft: '30px', color: 'black'}}><span>{this.state.countFollowings}</span> Following</p>
+                            </Link>
                         </div>
                         <p>{val.name}</p>
                     </div>

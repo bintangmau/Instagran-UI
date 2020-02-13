@@ -15,6 +15,10 @@ import OtherDetailsPhoto from './pages/otherdetailsphoto/OtherDetailsPhoto'
 import Notification from './pages/notification/Notification' 
 import EditProfile from './pages/editprofile/EditProfile'
 import DirectMessage from './pages/directmessage/DirectMessage'
+import Chatting from './pages/chatting/Chatting'
+import Followers from './components/followers/Followers'
+import Followings from './components/followings/Followings'
+import Likers from './components/likers/Likers'
 
 class App extends React.Component {
   componentDidMount() {
@@ -37,6 +41,10 @@ render() {
         <Route path='/notification' component={Notification} exact />
         <Route path='/editprofile' component={EditProfile} exact />
         <Route path='/directmessage' component={DirectMessage} exact />
+        <Route path='/chatting' component={Chatting} exact />
+        <Route path='/followers/:id' component={Followers} exact />
+        <Route path='/followings/:id' component={Followings} exact />
+        <Route path='/likers/:id' component={Likers} exact />
       </Switch>
     </div>
     );

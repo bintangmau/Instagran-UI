@@ -24,7 +24,9 @@ class ProfilePage extends Component {
         countFollowings: 0,
         showEditProfile: false,
         newUsername: '',
-        newName: ''
+        newName: '',
+        PostOrTag: false,
+        tandaiOrang: false
     }
 
     componentDidMount() {
@@ -176,8 +178,12 @@ class ProfilePage extends Component {
                                 }
                                 <div className="profile3">
                                     <p><span>{this.state.countPosts}</span> <br/>post</p>
-                                    <p style={{marginLeft: '30px'}}><span>{this.state.countFollowers}</span> <br/>followers</p>
-                                    <p style={{marginLeft: '30px'}}><span>{this.state.countFollowings}</span> <br/>following</p>
+                                    <Link to={`/followers/${this.props.id}`}>
+                                        <p style={{marginLeft: '30px', color: 'black'}}><span>{this.state.countFollowers}</span> <br/>followers</p>
+                                    </Link>
+                                    <Link to={`/followings/${this.props.id}`}>
+                                        <p style={{marginLeft: '30px', color: 'black'}}><span>{this.state.countFollowings}</span> <br/>following</p>
+                                    </Link>
                                 </div>
                                 {
                                     this.state.showEditProfile
@@ -226,14 +232,31 @@ class ProfilePage extends Component {
                                             <label htmlFor="file">
                                             + Choose a Photo
                                             </label>
+                                            {
+                                                this.state.photo 
+                                                ?
+                                                <p>Photo choosed</p>
+                                                :
+                                                null
+                                            }
                                             </div>
                                             <br />
                                             <input type="text" placeholder='Input Caption' onChange={(e) => this.setState({ caption: e.target.value})} value={this.state.caption}/>
-                                            <p className='shadow'>#{this.state.hashtag}</p>
+            
                                             <div style={{display: 'flex'}}>
                                                 <input type="text" placeholder='Hashtag (optional)' onChange={(e) => this.setState({ hashtag: e.target.value})}/>
-                                                <button className='btn btn-success'>Tambahkan</button>
+                                                <button className='btn btn-success' onClick={() => this.setState({ tandaiOrang: true })}>Tandai orang</button>
                                             </div>
+                                            {
+                                                this.state.tandaiOrang
+                                                ?
+                                                <div style={{ display: 'flex' }}>
+                                                    <input type="text" className='form-control' style={{ height: '100%' }}/>
+                                                    <button className='btn btn-danger' onClick={() => this.setState({ tandaiOrang: false })}>Cancel</button>
+                                                </div>
+                                                :
+                                                null
+                                            }
                                         </div>
                                         <div className="footerPost">
                                             {
@@ -244,8 +267,10 @@ class ProfilePage extends Component {
                                                 </div>
                                                 :
                                                 <>
+                                                <div style={{ display: 'flex' }}>
                                                     <input type="button" value="Post" className="btn btn-success" onClick={this.onBtnPostPhoto}/>
                                                     <input type="button" value="Cancel" className='btn btn-danger' onClick={() => this.setState({ showPost: false })}/>
+                                                </div>
                                                 </>
                                             }
                                         </div>
@@ -281,8 +306,30 @@ class ProfilePage extends Component {
             <div>
                 <div className="container">
                     {this.renderProfile()}
+
+
+                    <div className='container-fluid' style={{ marginTop: '11%' }}> 
+                         <div className="row">
+                             <div className="col-lg-6 col-sm-12 SlidePostTag" onClick={() => this.setState({ PostOrTag: false })}>
+                                 <h2 style={{ textAlign: 'center' }}>POSTS</h2>
+                             </div>
+                             <div className="col-lg-6 col-sm-12 SlidePostTag" onClick={() => this.setState({ PostOrTag: true })}>
+                                 <h2 style={{ textAlign: 'center' }}>TAGGED</h2>
+                             </div>
+                         </div>
+                    </div>
+
+
                     <div className='tampilUserPhoto row'>
-                        {this.renderUserPhoto()}
+                        {
+                            this.state.PostOrTag
+                            ?
+                            <h1>Cok</h1>
+                            :
+                            <>
+                            {this.renderUserPhoto()}
+                            </>
+                        }
                     </div>
                 </div>
             </div>

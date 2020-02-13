@@ -1,6 +1,6 @@
 .loginBox {
     position: absolute;
-    top: 65%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 380px;
@@ -8,16 +8,7 @@
     background: black;
     padding: 40px 80px;
     margin-bottom: 8%;
-}
-
-.authLogo {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    overflow: hidden;
-    position: absolute;
-    top: calc(-100px/2);
-    left: calc(50% - 50px);
+    border-radius: 10px;
 }
 
 .loginBox h2 {
@@ -38,6 +29,10 @@
     margin-top : 20px;
     margin-right : 40px;
     padding: 10px;
+}
+
+.gantiSign button {
+    color: white;
 }
 
 .loginBox input {

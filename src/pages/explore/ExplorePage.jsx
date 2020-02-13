@@ -31,9 +31,9 @@ class ExplorePage extends Component {
     renderListPhoto = () => {
         return this.state.tampungListData.map((val) => {
             return (
-                <div className='col-md-3 listPhoto1'>
+                <div className='col-lg-3 col-md-6 col-sm-12 listPhoto1'>
                     <Link to={`/otherprofilepage/${val.id}`}>
-                        <img src={urlApi + val.path_photo} style={{width: '350px', height: '350px', margin: '30px', objectFit: 'cover'}}/>
+                        <img src={urlApi + val.path_photo} style={{width: '300px', height: '300px', margin: '30px', objectFit: 'cover'}}/>
                     </Link>
                 </div>
             )
@@ -57,7 +57,7 @@ class ExplorePage extends Component {
             return (
                 <div className='row' style={{padding: '30px'}}>                   
                     <div className="col-md-2" style={{width: '10%'}}>
-                        <img src={urlApi + val.photo} style={{width: '70px', borderRadius: '50%'}} alt=""/>
+                        <img src={urlApi + val.photo} style={{width: '70px', height: '70px', borderRadius: '50%', objectFit: 'cover'}} alt=""/>
                     </div>
                     <div className="col-md-10" style={{width: '90%'}}>
                         <h4 style={{fontWeight: 'bold'}}><Link style={{color: 'black'}} to={`/otherprofilepage/${val.id}`}>{val.username}</Link></h4> 

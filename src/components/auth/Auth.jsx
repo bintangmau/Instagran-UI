@@ -83,17 +83,6 @@ class Auth extends Component {
         }
     }
 
-    deleteAll = () => {
-        axios.post(urlApi + 'user/deleteall')
-        .then(() => {
-            swal('Ye!', 'delete bise', 'success')
-        })
-        .catch((err) => {
-            console.log(err)
-            swal('Ups', 'gagal', 'error')
-        })
-    }
-
     render() {
         if(this.props.username) {
             return <Redirect to='/'/>
@@ -105,19 +94,20 @@ class Auth extends Component {
                     ?
                     <>
                     <div className='gantiSign'>
-                        <input type="button" value="Don't have an account?&nbsp;Please, Sign Up"className="btn btn-outline-warning" style={{color:"black", border :"none"}} onClick={() => this.setState({ showSign: true, passwordLogin: '' })}/>
+                        <button className="btn btn-dark" onClick={() => this.setState({ showSign: true, passwordLogin: '' })}>
+                            Don't have an account?&nbsp;Please, Sign Up
+                        </button>
                     </div>
-                    <div className='loginBox'>
-                        <img src='http://daman.co.id/daman.co.id/wp-content/uploads/2017/05/18160966_1300500379997093_1978007820502564864_n-1024x1024.jpg' class='authLogo'/>
+                    <div className='loginBox shadow'>
+                       
                         <h2 style={{color: 'white', marginTop: '30px'}}>Sign In</h2>
                         <form>
                             <p>Username</p>
-                                <input type="text" placeholder='Username' onChange={(e) => this.setState({ usernameLogin: e.target.value })} value={this.state.usernameLogin}/>
+                                <input type="text" onChange={(e) => this.setState({ usernameLogin: e.target.value })} value={this.state.usernameLogin}/>
                             <p>Password</p>
-                            <input type="password" placeholder='Password' onChange={(e) => this.setState({ passwordLogin: e.target.value })} value={this.state.passwordLogin}/>
-                            
+                            <input type="password" onChange={(e) => this.setState({ passwordLogin: e.target.value })} value={this.state.passwordLogin}/>
+                           
                             <input type="button" value='Sign in' className='tombolMasuk' onClick={this.onBtnLogin}/>
-                            <button onClick={this.deleteAll}>Delete</button>
                             <a href="">Lupa Password</a>
                         </form>
                     </div>
@@ -126,20 +116,25 @@ class Auth extends Component {
                     <>
                     {/* tampilkanRegister */}
                     <div className='gantiSign'>
-                        <input type="button" value="Sign In"className="btn btn-outline-warning" style={{color:"black", border :"none"}} onClick={() => this.setState({ showSign: false, passwordRegister: '' })}/>
+                        <button className="btn btn-dark" onClick={() => this.setState({ showSign: false, passwordRegister: '' })}>
+                            Sign In
+                        </button>
                     </div>
-                    <div className='loginBox'>
-                        <img src='http://daman.co.id/daman.co.id/wp-content/uploads/2017/05/18160966_1300500379997093_1978007820502564864_n-1024x1024.jpg' class='authLogo'/>
+                    <div className='loginBox shadow'>
+                
                         <h2 style={{color: 'white', marginTop: '30px'}}>Sign Up</h2>
-                        <form>
+                    
                             <p>Username</p>
-                                <input type="text" placeholder='Username' onChange={(e) => this.setState({usernameRegister: e.target.value})} value={this.state.usernameRegister}/>
+                                <input type="text" onChange={(e) => this.setState({usernameRegister: e.target.value})} value={this.state.usernameRegister}/>
                             <p>Your Name</p>
-                                <input type="text" placeholder='Your Name' onChange={(e) => this.setState({ nameRegister: e.target.value })} value={this.state.nameRegister} />
+                                <input type="text" onChange={(e) => this.setState({ nameRegister: e.target.value })} value={this.state.nameRegister} />
                             <p>Password</p>
-                            <input type="password" placeholder='Password' onChange={(e) => this.setState({passwordRegister: e.target.value})} value={this.state.passwordRegister}/>
+                            <input type="password" onChange={(e) => this.setState({passwordRegister: e.target.value})} value={this.state.passwordRegister}/>
                             <p>Profile Photo</p>
-                            <input type="file" style={{background: 'white'}} onChange={this.imagePost}/>
+                            <div className="custom-file">
+                                <input type="file" className="custom-file-input" onChange={this.imagePost} id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" />
+                                <label className="custom-file-label" htmlFor="inputGroupFile01">Choose file</label>
+                            </div>
                             {
                                 this.state.loadingRegister === true
                                 ?
@@ -150,7 +145,7 @@ class Auth extends Component {
                                 <input type="button" value='Sign Up' className='tombolMasuk' onClick={this.onBtnRegister}/>
                             }
                             <a href="">Lupa Password</a>
-                        </form>
+                        
                     </div>
                     </>
                 }

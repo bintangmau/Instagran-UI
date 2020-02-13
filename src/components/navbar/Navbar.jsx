@@ -55,6 +55,22 @@ class Navbar extends Component{
                                 <a className="nav-link" href="#">Notification</a>
                             </Link>
                         </li>
+                        {
+                            this.props.username === ''
+                            ?
+                            null
+                            :
+                            <>
+                            <button onClick={this.props.logOut} style={{backgroundColor: 'red'}}>
+                                Log Out
+                            </button>
+                            {/* <li className="nav-item">
+                                <Link to='/notification' onClick={this.props.logOut}>
+                                    <a className="nav-link" href="#">Log Out</a>
+                                </Link>
+                            </li> */}
+                            </>
+                        }
                         {/* <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-555" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown
                             </a>
@@ -65,25 +81,36 @@ class Navbar extends Component{
                             </div>
                         </li> */}
                         </ul>
-                        <ul className="navbar-nav ml-auto nav-flex-icons">
-                        <li className="nav-item" style={{marginTop: '40px', marginRight: '15px', fontSize: '20px'}}>
-                            <Link to='/directmessage'>
-                                <a className="nav-link waves-effect waves-light">{this.state.jumlahPesan}
-                                <i className="fas fa-envelope" />
-                                </a>
-                            </Link>
-                        </li>
-                        <li className="nav-item" onClick={this.props.logOut} style={{marginTop: '40px', marginRight: '15px', fontSize: '20px'}}>
-                            <a className="nav-link" style={{color: 'red'}}>Log Out</a>
-                        </li>
-                        <li className="nav-item avatar dropdown">
-                            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <Link to={`/profile/${this.props.id}`}>
-                                    <img src={urlApi + this.props.photo} className="rounded-circle z-depth-0" style={{width: '90px', height: '90px', objectFit: 'cover'}} alt="avatar image" />
-                                </Link>
-                            </a>
-                        </li>
-                        </ul>
+
+                        {
+                            this.props.username == ''
+                            ?
+                            null
+                            :
+                            <>
+
+                            <ul className="navbar-nav ml-auto nav-flex-icons">
+                                <li className="nav-item" style={{marginTop: '40px', marginRight: '15px', fontSize: '20px'}}>
+                                    <Link to='/directmessage'>
+                                        <a className="nav-link waves-effect waves-light">
+                                        <i className="fas fa-envelope" style={{ color: 'black', fontWeight: 'bold', fontSize: '25px'}}/>
+                                        </a>
+                                    </Link>
+                                </li>
+
+                                <li className="nav-item avatar dropdown">
+                                    <a className="nav-link" id="navbarDropdownMenuLink-55" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <Link to={`/profile/${this.props.id}`}>
+                                            <img src={urlApi + this.props.photo} className="rounded-circle z-depth-0" style={{width: '70px', height: '70px', objectFit: 'cover'}} alt="avatar image" />
+                                        </Link>
+                                    </a>
+                                </li>
+                            </ul>
+
+                            </>
+                        }
+
+
                     </div>
                 </nav>
                 {/* <div className='navbar1'>

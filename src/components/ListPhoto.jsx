@@ -35,8 +35,20 @@ export default function ListPhoto({ dataListPhoto, idUser }) {
     const likePhoto = () => {
         axios.post(urlApi + 'photo/likephoto', { id_user: idUser, id_photo: dataListPhoto.idphotos, date_likes: date})
         .then(() => {
-            setLiked(true)
-            getCountLike()
+            axios.post(urlApi + 'notification/notiflikephoto', {
+                id_fail: idUser,
+                id_maful: dataListPhoto.id,
+                date_notif: new Date().getFullYear() + '-' + (new Date().getMonth() + 1)  + '-' + new Date().getDate(),
+                message: 'Menyukai foto anda',
+                id_photo: dataListPhoto.idphotos
+            })
+            .then(() => {
+                setLiked(true)
+                getCountLike()
+            })
+            .catch((err) => {
+                console.log(err)
+            })
         })
         .catch((err) => {
             console.log(err)
@@ -130,7 +142,9 @@ export default function ListPhoto({ dataListPhoto, idUser }) {
                 <img src={urlApi + dataListPhoto.path_photo} alt=""/>
                 <div className='listLike1'>
                     <div className="caption1">
-                        <span>{countLike} Likes</span>
+                        <Link to={`/likers/${dataListPhoto.idphotos}`}>
+                            <span style={{color: 'black'}}>{countLike} Likes</span>
+                        </Link>
                         <i class="fa fa-heart-o" aria-hidden="true"></i>
                         <p>
                             <span><Link to={`/otherprofilepage/${dataListPhoto.id}`} style={{textDecoration: 'none', color: 'black'}}>{dataListPhoto.username}</Link></span> {dataListPhoto.caption}</p><br />

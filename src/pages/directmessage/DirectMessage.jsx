@@ -107,7 +107,7 @@ class DirectMessage extends Component {
     renderChatsFromMe = () => {
         return this.state.dataChatsFromMe.map((val, idx) => {
             return (
-                <div key={idx} style={{ padding: '25px', backgroundColor: '#ccffcc', margin: '20px', height: '20px', borderRadius: '20px', display: 'flex'}}>
+                <div className='row' key={idx} style={{ padding: '25px', backgroundColor: '#ccffcc', margin: '20px', height: '20px', borderRadius: '20px', display: 'flex'}}>
                     <p style={{ fontWeight: 'bold' }}>{val.chats}</p>
                     <p style={{float: 'right', marginLeft: '100px'}}>
                         {val.status}
@@ -120,7 +120,7 @@ class DirectMessage extends Component {
     renderChatsForMe = () => {
         return this.state.dataChatsForMe.map((val, idx) => {
             return (
-                <div key={idx}>
+                <div key={idx} className='row'>
                     <p style={{fontWeight: 'bold'}}>{val.chats}</p>
                 </div>
             )

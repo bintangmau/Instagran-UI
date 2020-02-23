@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import { urlApi } from '../../helper/database'
+import { connect } from 'react-redux' 
 import swal from 'sweetalert'
+import { Redirect } from 'react-router-dom';
 
 import '../detailsphoto/DetailsPhoto.css'
 
@@ -58,6 +60,9 @@ class OtherDetailsPhoto extends Component {
     }
 
     render() {
+        if(this.props.username == '') {
+            return <Redirect to='/auth'/>
+        }
         return (
             <div>
                 {
@@ -78,4 +83,10 @@ class OtherDetailsPhoto extends Component {
     }
 }
 
-export default OtherDetailsPhoto;
+const mapStateToProps = (state) => {
+    return {
+        username: state.user.username,
+    }
+}
+
+export default connect(mapStateToProps, {})(OtherDetailsPhoto);

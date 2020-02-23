@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { urlApi } from '../../helper/database';
 import { connect } from 'react-redux'
 import swal from 'sweetalert';
@@ -42,6 +42,9 @@ class Notification extends Component {
 
 
     render() {
+        if(this.props.id == 0) {
+            return <Redirect to='/auth'/>
+        }
         return (
             <div>
                 {this.renderNotification()}

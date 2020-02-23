@@ -58,6 +58,11 @@ render() {
                                 Message
                             </MDBDropdownItem>
                         </MDBNavLink>
+                        <MDBNavLink to={`/profile/${this.props.id}`}>
+                            <MDBDropdownItem>
+                                {this.props.username}
+                            </MDBDropdownItem>
+                        </MDBNavLink>
                     {/* <MDBDropdownItem href="#!">Another Action</MDBDropdownItem>
                     <MDBDropdownItem href="#!">Something else here</MDBDropdownItem> */}
                     <button className='btn btn-danger btn-block' onClick={this.btnLogOut}>

@@ -308,7 +308,7 @@ class ProfilePage extends Component {
                     {this.renderProfile()}
 
 
-                    <div className='container-fluid' style={{ marginTop: '11%' }}> 
+                    {/* <div className='container-fluid' style={{ marginTop: '11%' }}> 
                          <div className="row">
                              <div className="col-lg-6 col-sm-12 SlidePostTag" onClick={() => this.setState({ PostOrTag: false })}>
                                  <h2 style={{ textAlign: 'center' }}>POSTS</h2>
@@ -317,7 +317,7 @@ class ProfilePage extends Component {
                                  <h2 style={{ textAlign: 'center' }}>TAGGED</h2>
                              </div>
                          </div>
-                    </div>
+                    </div> */}
 
 
                     <div className='tampilUserPhoto row'>

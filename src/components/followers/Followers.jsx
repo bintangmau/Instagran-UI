@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { urlApi } from '../../helper/database'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 class Followers extends Component {
@@ -51,6 +51,9 @@ class Followers extends Component {
     }
 
     render() {
+        if(this.props.username == '') {
+            return <Redirect to='/auth'/>
+        }
         return (
             <div className='container'>
                 {

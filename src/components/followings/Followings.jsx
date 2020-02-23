@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
 import { urlApi } from '../../helper/database'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 class Followings extends Component {
     state = {
@@ -44,6 +45,9 @@ class Followings extends Component {
     }
 
     render() {
+        if(this.props.username == '') {
+            return <Redirect to='/auth'/>
+        }
         return (
             <div className='container'>
                 {
@@ -67,4 +71,10 @@ class Followings extends Component {
 }
 
 
-export default Followings
+const mapStateToProps = (state) => {
+    return {
+        username: state.user.username,
+    }
+}
+
+export default connect(mapStateToProps, {})(Followings);

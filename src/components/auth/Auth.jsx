@@ -93,11 +93,6 @@ class Auth extends Component {
                     !this.state.showSign
                     ?
                     <>
-                    <div className='gantiSign'>
-                        <button className="btn btn-dark" onClick={() => this.setState({ showSign: true, passwordLogin: '' })}>
-                            Don't have an account?&nbsp;Please, Sign Up
-                        </button>
-                    </div>
                     <div className='loginBox shadow'>
                        
                         <h2 style={{color: 'white', marginTop: '30px'}}>Sign In</h2>
@@ -108,18 +103,19 @@ class Auth extends Component {
                             <input type="password" onChange={(e) => this.setState({ passwordLogin: e.target.value })} value={this.state.passwordLogin}/>
                            
                             <input type="button" value='Sign in' className='tombolMasuk' onClick={this.onBtnLogin}/>
-                            <a href="">Lupa Password</a>
                         </form>
+
+                        <div className='gantiSign'>
+                            <button className="btn btn-dark" onClick={() => this.setState({ showSign: true, passwordLogin: '' })}>
+                            Daftar
+                            </button>
+                        </div>
+
                     </div>
                     </>
                     :
                     <>
                     {/* tampilkanRegister */}
-                    <div className='gantiSign'>
-                        <button className="btn btn-dark" onClick={() => this.setState({ showSign: false, passwordRegister: '' })}>
-                            Sign In
-                        </button>
-                    </div>
                     <div className='loginBox shadow'>
                 
                         <h2 style={{color: 'white', marginTop: '30px'}}>Sign Up</h2>
@@ -144,7 +140,12 @@ class Auth extends Component {
                                 :
                                 <input type="button" value='Sign Up' className='tombolMasuk' onClick={this.onBtnRegister}/>
                             }
-                            <a href="">Lupa Password</a>
+
+                            <div className='gantiSign'>
+                                <button className="btn btn-dark" onClick={() => this.setState({ showSign: false, passwordRegister: '' })}>
+                                    Masuk
+                                </button>
+                            </div>
                         
                     </div>
                     </>

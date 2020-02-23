@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { urlApi } from '../../helper/database';
 import { connect } from 'react-redux'
 import moment from 'moment'
@@ -231,7 +231,9 @@ class OtherProfilePage extends Component {
                     </div>
                 </center>
             )
-        }
+        } else if(this.props.id == 0) {
+            return <Redirect to='/auth'/>
+        } 
         return (
             <div style={{marginBottom: '100px'}}>
                 <div className="container">

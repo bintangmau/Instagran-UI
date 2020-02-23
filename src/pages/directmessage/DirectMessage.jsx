@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import { urlApi } from '../../helper/database'
 import swal from 'sweetalert'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { MDBFormInline } from "mdbreact"
 import io from 'socket.io-client'
 
@@ -168,6 +168,9 @@ class DirectMessage extends Component {
     }
 
     render() {
+        if(this.props.username == '') {
+            return <Redirect to='/auth'/>
+        }
         return (
             <div>
                 <div className="container-fluid">

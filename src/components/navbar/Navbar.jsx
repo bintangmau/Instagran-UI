@@ -11,6 +11,7 @@ class Navbar extends Component{
     state = {
         jumlahPesan: 0
     }
+    
     btnLogOut = () => {
         if(window.confirm('Are you Sure to Log Out ?')) {
             this.props.logOut()

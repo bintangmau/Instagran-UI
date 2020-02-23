@@ -133,8 +133,8 @@ class DirectMessage extends Component {
     searchUser = () => {
         axios.post(urlApi + 'chats/searchuser', { username: this.state.keyWords, namaUser: this.props.username })
         .then((res) => {
-            this.setState({ tampungHasilCari: res.data, showHasilCari: true })
-            // console.log(res.data.length)
+            this.setState({ tampungHasilCari: res.data })
+            console.log(res.data)
         })
         .catch((err) => {
             console.log(err)

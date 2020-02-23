@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { keepLogin } from './redux/actions/userAction'
 
 import Navbar from './components/navbar/Navbar'
+import NavbarPage from './components/navbar/NavbarPage'
 import MainPage from './pages/home/MainPage'
 import ExplorePage from './pages/explore/ExplorePage'
 import ProfilePage from './pages/profile/ProfilePage'
@@ -29,7 +30,7 @@ class App extends React.Component {
 render() {
     return (
     <div>
-      <Navbar />
+      <NavbarPage />
       <Switch>
         <Route path='/' component={MainPage} exact />
         <Route path='/explore' component={ExplorePage} exact />

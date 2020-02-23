@@ -4,11 +4,13 @@ import axios from 'axios'
 import { urlApi } from '../../helper/database'
 import swal from 'sweetalert'
 import { Link } from 'react-router-dom'
+import { MDBFormInline } from "mdbreact"
 import io from 'socket.io-client'
 
 class DirectMessage extends Component {
     state = {
         inputMessage: '',
+        tampungHasilCari: [],
         listFriends: [],
         idUserChoosed: 0,
         dataChatsFromMe: [],
@@ -16,7 +18,8 @@ class DirectMessage extends Component {
         usernameFriend: '',
         photoFriend: '',
         loading: false,
-        showChat: false 
+        showChat: false ,
+        keyWords: ''
     }
     
     onBtnSendMessage = () => {
@@ -127,6 +130,31 @@ class DirectMessage extends Component {
         })
     }
 
+    searchUser = () => {
+        axios.post(urlApi + 'photo/searchphoto', { username: this.state.keyWords, namaUser: this.props.username })
+        .then((res) => {
+            this.setState({ tampungHasilCari: res.data, showHasilCari: true })
+            // console.log(res.data.length)
+        })
+        .catch((err) => {
+            console.log(err)
+            swal('Ups1')
+        })    
+    }
+
+    renderHasilCari = () => {
+        return this.state.tampungHasilCari.map((val) => { 
+            return (
+                <div className='shadow' style={{padding: '30px', display: 'flex'}}>
+                    <img src={urlApi + val.photo} style={{width: '70px', height: '70px', borderRadius: '50%', objectFit: 'cover'}} alt=""/>
+                    <Link onClick={() => this.getIdUserChecked(val.id_followed_user)}>
+                        <p style={{margin: '20px', fontWeight: 'bold'}}>{val.username}</p>
+                    </Link>
+                </div>
+            )
+        })
+    }
+
     componentDidMount() {
         this.getListFriends()
         this.socket = io(`${urlApi}`)
@@ -151,6 +179,12 @@ class DirectMessage extends Component {
                                 </div>
                                 <div className="col-md-8" style={{  padding: '27px'}}>
                                     <h3 style={{fontWeight: '500', color: '#336699'}}>Friends</h3>
+                                    <MDBFormInline className="md-form">
+                                    {/* <MDBIcon icon="search" /> */}
+                                        <input className="form-control form-control-sm ml-3 w-75" value={this.state.keyWords} onChange={(e) => this.setState({ keyWords: e.target.value })} 
+                                        type="text" placeholder="Search" aria-label="Search" onKeyUp={this.searchUser} />
+                                    </MDBFormInline>
+                                    {this.renderHasilCari()}
                                     {this.renderListFriends()}
                                 </div>
                             </div>

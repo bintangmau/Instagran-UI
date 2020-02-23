@@ -21,11 +21,10 @@ class Navbar extends Component{
     getJumlahPesan = () => {
         axios.get(urlApi + 'chats/getjumlahpesannotif/' + this.props.id)
         .then((res) => {
-            console.log(res.data)
             this.setState({ jumlahPesan: res.data[0].jumlahPesan })
         })
         .catch((err) => {
-            console.log(err)
+            return null
         })
     }
 
@@ -61,7 +60,7 @@ class Navbar extends Component{
                             null
                             :
                             <>
-                            <button onClick={this.props.logOut} style={{backgroundColor: 'red'}}>
+                            <button onClick={this.props.logOut} className='btn btn-danger'>
                                 Log Out
                             </button>
                             {/* <li className="nav-item">

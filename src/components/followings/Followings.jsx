@@ -46,9 +46,21 @@ class Followings extends Component {
     render() {
         return (
             <div className='container'>
-                <center>
-                    {this.renderDataFollowings()}
-                </center>
+                {
+                    this.state.dataFollowings.length < 1
+                    ?
+                    <center>
+                        <div style={{marginTop: '100px'}} className="spinner-border" role="status">
+                            <span className="sr-only">Loading...</span>                       
+                        </div>
+                    </center>
+                    :
+                    <>
+                    <center>
+                        {this.renderDataFollowings()}
+                    </center>
+                    </>
+                }
             </div>
         )
     }

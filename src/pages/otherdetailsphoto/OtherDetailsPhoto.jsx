@@ -10,11 +10,6 @@ class OtherDetailsPhoto extends Component {
         tampungDetailsPhoto: []
     }
 
-    componentDidMount() {
-        this.getDetailsPhoto()
-        this.renderDetails()
-    }
-
     getDetailsPhoto = () => {
         axios.get(urlApi + 'photo/getphotodetails/' +  this.props.match.params.id)
         .then((res) => {
@@ -58,11 +53,26 @@ class OtherDetailsPhoto extends Component {
         })
     }
 
+    componentDidMount() {
+        this.getDetailsPhoto()
+    }
 
     render() {
         return (
             <div>
-                {this.renderDetails()}
+                {
+                    this.state.tampungDetailsPhoto.length < 1
+                    ?
+                    <center>
+                        <div style={{marginTop: '100px'}} className="spinner-border" role="status">
+                            <span className="sr-only">Loading...</span>                       
+                        </div>
+                    </center>
+                    :
+                    <>
+                        {this.renderDetails()}
+                    </>
+                }
             </div>
         )
     }

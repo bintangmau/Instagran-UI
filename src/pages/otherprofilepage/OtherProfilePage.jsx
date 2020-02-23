@@ -18,22 +18,8 @@ class OtherProfilePage extends Component {
         waktu: moment().format("MMM Do YY"),
         countPosts: 0,
         countFollowers: 0,
-        countFollowings: 0
-    }
-
-    componentDidMount() {
-        this.checkFollowed()
-        this.getDataUser()
-        this.renderDataUser()
-        this.getPhotoUser()
-        this.renderUserPhoto()
-        this.getCountPosts()
-        this.getCountFollowers()
-        this.getCountFollowings()
-    }
-    
-    componentDidUpdate() {
-        this.getDataUser()
+        countFollowings: 0,
+        loadingFollow: false
     }
 
     getDataUser = () => {
@@ -42,8 +28,7 @@ class OtherProfilePage extends Component {
             this.setState({ tampungDataUser: res.data })
         })
         .catch((err) => {
-            console.log(err)
-            swal('Sip!', 'gagal disini jancok', 'error')
+           return null
         })
     }
 
@@ -53,8 +38,7 @@ class OtherProfilePage extends Component {
             this.setState({ tampungUserPhoto: res.data })
         })
         .catch((err) => {
-            console.log(err)
-            swal('ups', 'get foto gagal', 'error')
+            return null
         })
     }
 
@@ -67,12 +51,12 @@ class OtherProfilePage extends Component {
             this.setState({ tampungCheckFollowed: res.data })
         })
         .catch((err) => {
-            console.log(err)
-            swal('Ups!', 'gagal', 'error')
+            return null
         })
     }
 
     onBtnFollow = () => {
+        this.setState({ loadingFollow: true })
         Axios.post(urlApi + 'user/followinguser', {
             id_user_follows: this.props.id,
             id_followed_user: this.idFollowedUser,
@@ -86,21 +70,22 @@ class OtherProfilePage extends Component {
                 message: 'Mulai mengikuti anda'
             })
             .then(() => {
+                this.setState({ loadingFollow: false })
                 this.checkFollowed()
                 this.getCountFollowers()
             })
             .catch((err) => {
-                console.log(err)
+                this.setState({ loadingFollow: false })
             })
         })
         .catch((err) => {
-            console.log(err)
             swal('Ups', 'follow error', 'error')
         })
     }
 
     onBtnUnFollow = () => {
         if(window.confirm('Are you Sure to Unfollow this User ?')) {
+            this.setState({ loadingFollow: true })
             Axios.post(urlApi + 'user/unfollow', {
                 idUserFollows: this.props.id,
                 idFollowedUser: this.idFollowedUser
@@ -108,9 +93,10 @@ class OtherProfilePage extends Component {
             .then(() => {
                 this.checkFollowed()
                 this.getCountFollowers()
+                this.setState({ loadingFollow: false })
             })
             .catch((err) => {
-                console.log(err)
+                this.setState({ loadingFollow: false })
                 swal('Ups', 'unfollow error', 'error')
             })
         }
@@ -122,8 +108,7 @@ class OtherProfilePage extends Component {
             this.setState({ countPosts: res.data[0].jumlahPost })
         })
         .catch((err) => {
-            console.log(err)
-            swal('ups', 'get gagal count posts', 'error')
+            return null
         })
     }
 
@@ -133,8 +118,7 @@ class OtherProfilePage extends Component {
             this.setState({ countFollowers: res.data[0].jumlahFollowers })
         })
         .catch((err) => {
-            console.log(err)
-            swal('ups', 'get gagal count followers', 'error')
+            return null
         })
     }
 
@@ -144,8 +128,7 @@ class OtherProfilePage extends Component {
             this.setState({ countFollowings: res.data[0].jumlahFollowing })
         })
         .catch((err) => {
-            console.log(err)
-            swal('ups', 'get gagal count following', 'error')
+            return null
         })
     }
 
@@ -165,11 +148,31 @@ class OtherProfilePage extends Component {
                                 </div>
                                 <div className="col-md-9">
                                     {
-                                        this.state.tampungCheckFollowed.length > 0
+                                        this.state.tampungCheckFollowed.length == 0
                                         ?
-                                        <button className='btn btn-dark' onClick={this.onBtnUnFollow}>Followed</button>
+                                        <div>
+                                            {
+                                                this.state.loadingFollow
+                                                ?
+                                                <div className="spinner-border" role="status">
+                                                    <span className="sr-only">Loading...</span>                       
+                                                </div>
+                                            :
+                                            <button className='btn btn-success' onClick={this.onBtnFollow}>Follow</button>
+                                            }
+                                        </div>
                                         :
-                                        <button className='btn btn-success' onClick={this.onBtnFollow}>Follow</button>
+                                        <div>
+                                            {
+                                                this.state.loadingFollow
+                                                ?
+                                                <div className="spinner-border" role="status">
+                                                    <span className="sr-only">Loading...</span>                       
+                                                </div>
+                                            :
+                                            <button className='btn btn-dark' onClick={this.onBtnUnFollow}>Followed</button>
+                                            }
+                                        </div>
                                     }
                                 </div>
                             </div>
@@ -195,21 +198,54 @@ class OtherProfilePage extends Component {
         return this.state.tampungUserPhoto.map((val) => {
             return (
                 <div className='fotoOrang col-md-3'>
-                    <Link to={`/otherdetailsphoto/${val.idphotos}`}>
-                        <img src={urlApi + val.path_photo} alt=""/>
-                    </Link>
+                  
+                        <Link to={`/otherdetailsphoto/${val.idphotos}`}>
+                            <img src={urlApi + val.path_photo} alt=""/>
+                        </Link>
+                    
                 </div>
             )
         })
     }
 
+    componentDidMount() {
+        console.log(this.state.countPosts)
+        this.getDataUser()
+        this.getPhotoUser()
+        this.getCountPosts()
+        this.getCountFollowers()
+        this.getCountFollowings()
+        this.checkFollowed()
+    }
+
+    componentDidUpdate() {
+        this.getDataUser()
+    }
+
     render() {
+        if(this.state.tampungDataUser.length < 1 && this.state.tampungCheckFollowed < 1 && this.state.tampungUserPhoto.length < 1) {
+            return (
+                <center>
+                    <div style={{marginTop: '100px'}} className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>                       
+                    </div>
+                </center>
+            )
+        }
         return (
             <div style={{marginBottom: '100px'}}>
                 <div className="container">
                     {this.renderDataUser()}
                     <div className='row' style={{marginTop: '50px'}}>
-                        {this.renderUserPhoto()}
+                        {
+                            this.state.countPosts === 0
+                            ?
+                            <h3>No posts yet</h3>
+                            :
+                            <>
+                            {this.renderUserPhoto()}
+                            </>
+                        }
                     </div>
                 </div>
             </div>

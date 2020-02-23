@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import Axios from 'axios'
 import { urlApi } from '../../helper/database'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-export default class Likers extends Component {
+class Likers extends Component {
     state = {
         dataLikers: []
     }
@@ -28,9 +29,15 @@ export default class Likers extends Component {
                         </Link>
                     </div>
                     <div className="col-md-9">
-                        <Link to={`/otherprofilepage/${val.id}`}>
+                        {
+                            val.username == this.props.username
+                            ?
                             <p style={{fontWeight: 'bold', float: 'left', margin: '20px', fontSize: '20px', color: 'black' }}>{val.username}</p>
-                        </Link>
+                            :
+                            <Link to={`/otherprofilepage/${val.id}`}>
+                                <p style={{fontWeight: 'bold', float: 'left', margin: '20px', fontSize: '20px', color: 'black' }}>{val.username}</p>
+                            </Link>
+                        }
                     </div>
                 </div>
             )
@@ -51,3 +58,11 @@ export default class Likers extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        username: state.user.username,
+    }
+}
+
+export default connect(mapStateToProps, {})(Likers);

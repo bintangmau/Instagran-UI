@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { urlApi } from '../../helper/database'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-
-export default class Followers extends Component {
+class Followers extends Component {
     state = {
         dataFollowers: []
     }
@@ -30,9 +30,15 @@ export default class Followers extends Component {
                             </Link>
                         </div>
                         <div className="col-md-9">
-                            <Link to={`/otherprofilepage/${val.id}`}>
+                            {
+                                val.username == this.props.username
+                                ?
                                 <p style={{fontWeight: 'bold', float: 'left', margin: '20px', fontSize: '20px', color: 'black' }}>{val.username}</p>
-                            </Link>
+                                :
+                                <Link to={`/otherprofilepage/${val.id}`}>
+                                    <p style={{fontWeight: 'bold', float: 'left', margin: '20px', fontSize: '20px', color: 'black' }}>{val.username}</p>
+                                </Link>
+                            }
                         </div>
                     </div>
                 </div>
@@ -47,10 +53,30 @@ export default class Followers extends Component {
     render() {
         return (
             <div className='container'>
-                <center>
-                    {this.renderFollowers()}
-                </center>
+                {
+                    this.state.dataFollowers.length < 1
+                    ?
+                    <center>
+                        <div style={{marginTop: '100px'}} className="spinner-border" role="status">
+                            <span className="sr-only">Loading...</span>                       
+                        </div>
+                    </center>
+                    :
+                    <>
+                    <center>
+                        {this.renderFollowers()}
+                    </center>
+                    </>
+                }
             </div>
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        username: state.user.username,
+    }
+}
+
+export default connect(mapStateToProps, {})(Followers);
